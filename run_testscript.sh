@@ -6,7 +6,7 @@ if [ $# -eq 0 ]
 fi
 
 LISTING=$1
-SCRIPT=${LISTING}-test.txtar
+SCRIPT=${LISTING}/tmp-test.txtar
 # go install github.com/bitfield/txtar-c@latest
 txtar-c -quote -script ${LISTING}/test.txtar $LISTING >>$SCRIPT
 echo -n "${LISTING}... " && testscript $SCRIPT && rm $SCRIPT
