@@ -1,0 +1,2 @@
+! exec go test
+stderr 'undefined: stringy.StringifyTo'

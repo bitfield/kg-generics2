@@ -1,4 +1,4 @@
-module github.com/bitfield/group
+module github.com/bitfield/greater
 
 go 1.18
 

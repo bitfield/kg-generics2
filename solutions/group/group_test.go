@@ -1,8 +1,9 @@
 package group_test
 
 import (
-	"group"
 	"testing"
+
+	"github.com/bitfield/group"
 
 	"github.com/google/go-cmp/cmp"
 )
