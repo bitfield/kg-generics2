@@ -1,0 +1,2 @@
+! exec go test
+stderr -count=4 'undefined: compose.Compose'

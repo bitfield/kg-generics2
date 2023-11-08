@@ -1,4 +1,4 @@
-# Know Go: Generics
+# Know Go: Generics (2024)
 
 [![](cover_small.png)](https://bitfieldconsulting.com/books/generics)
 
