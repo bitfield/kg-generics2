@@ -4,26 +4,20 @@ import (
 	"testing"
 
 	"github.com/bitfield/dupes"
-
-	"github.com/google/go-cmp/cmp"
 )
 
-func TestDupesIsTrueWhenInputContainsNonConsecutiveDuplicates(t *testing.T) {
+func TestDupesIsTrueGivenNonConsecutiveDuplicates(t *testing.T) {
 	t.Parallel()
 	s := []int{1, 2, 3, 1, 5}
-	want := true
-	got := dupes.Dupes(s)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if !dupes.Dupes(s) {
+		t.Errorf("Dupes(%v): want true, got false", s)
 	}
 }
 
-func TestDupesIsFalseWhenInputContainsNoDuplicates(t *testing.T) {
+func TestDupesIsFalseGivenNoDuplicates(t *testing.T) {
 	t.Parallel()
-	s := []string{"a"}
-	want := false
-	got := dupes.Dupes(s)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	s := []string{"a", "b", "c"}
+	if dupes.Dupes(s) {
+		t.Errorf("Dupes(%v): want false, got true", s)
 	}
 }

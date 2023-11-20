@@ -1,11 +1,10 @@
 package group_test
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/bitfield/group"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestGroupContainsWhatIsAppendedToIt(t *testing.T) {
@@ -14,7 +13,7 @@ func TestGroupContainsWhatIsAppendedToIt(t *testing.T) {
 	got = append(got, "hello")
 	got = append(got, "world")
 	want := group.Group[string]{"hello", "world"}
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if !slices.Equal(want, got) {
+		t.Errorf("want %v, got %v", want, got)
 	}
 }

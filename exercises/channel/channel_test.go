@@ -5,8 +5,6 @@ import (
 	"testing"
 
 	"github.com/bitfield/channel"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestSendFollowedByReceiveGivesOriginalValue(t *testing.T) {
@@ -15,8 +13,8 @@ func TestSendFollowedByReceiveGivesOriginalValue(t *testing.T) {
 	want := 99
 	c.Send(want)
 	got := c.Receive()
-	if !cmp.Equal(want, got) {
-		t.Fatal(cmp.Diff(want, got))
+	if want != got {
+		t.Fatalf("want %d received, got %d", want, got)
 	}
 }
 
@@ -43,7 +41,7 @@ func TestReceivesReturns2AfterTwoSendOperations(t *testing.T) {
 	want := 2
 	got := c.Receives()
 	if want != got {
-		t.Fatalf("want 2 receives, got %d", got)
+		t.Fatalf("want %d receives, got %d", want, got)
 	}
 }
 

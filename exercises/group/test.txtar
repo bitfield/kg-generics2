@@ -1,2 +1,3 @@
 ! exec go test
-stderr 'undefined: group.Group'
+stderr -count=2 'undefined: group.Group'
+stderr 'cannot infer S'

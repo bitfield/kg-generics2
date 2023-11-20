@@ -3,16 +3,15 @@ package length_test
 import (
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-
 	"github.com/bitfield/length"
 )
 
-func TestLenOfGroupIs2WhenItContains2Elements(t *testing.T) {
+func TestLenOfSliceIs2WhenItContains2Elements(t *testing.T) {
 	t.Parallel()
+	s := []int{1, 2}
 	want := 2
-	got := length.Len([]int{1, 2})
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	got := length.Len(s)
+	if want != got {
+		t.Errorf("Len(%v): want %d, got %d", s, want, got)
 	}
 }

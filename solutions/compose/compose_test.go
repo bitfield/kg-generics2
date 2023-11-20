@@ -5,8 +5,6 @@ import (
 	"testing"
 
 	"github.com/bitfield/compose"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func isOdd(p int) bool {
@@ -19,9 +17,8 @@ func next(p int) int {
 
 func TestComposeAppliesFuncsToIntInReverseOrder(t *testing.T) {
 	t.Parallel()
-	odd := compose.Compose(isOdd, next, 1)
-	if odd {
-		t.Fatal("isOdd(next(1)): want false, got true")
+	if compose.Compose(isOdd, next, 1) {
+		t.Fatal("want false for isOdd(next(1)), got true")
 	}
 }
 
@@ -30,8 +27,8 @@ func TestComposeAppliesFuncsToStringInReverseOrder(t *testing.T) {
 	input := "HeLlO, wOrLd"
 	want := "hello, world"
 	got := compose.Compose(strings.ToLower, strings.ToUpper, input)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if want != got {
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
 
@@ -48,8 +45,8 @@ func TestComposeAppliesFuncsToSliceInReverseOrder(t *testing.T) {
 	input := [][]int{{1, 2, 3}}
 	want := 1
 	got := compose.Compose(first[int], last[[]int], input)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }
 
@@ -58,7 +55,7 @@ func TestComposeAppliesFuncsToSliceInReverseOrder2(t *testing.T) {
 	input := [][]int{{1, 2, 3}}
 	want := 3
 	got := compose.Compose(last[int], first[[]int], input)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }

@@ -5,8 +5,6 @@ import (
 	"unicode"
 
 	"github.com/bitfield/funcmap"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestFuncMap_AppliesDoubleTo2AndReturns4(t *testing.T) {
@@ -21,8 +19,8 @@ func TestFuncMap_AppliesDoubleTo2AndReturns4(t *testing.T) {
 	}
 	want := 4
 	got := fm.Apply("double", 2)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if want != got {
+		t.Errorf("double(2): want %d, got %d", want, got)
 	}
 }
 

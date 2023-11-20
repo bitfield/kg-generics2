@@ -1,2 +1,3 @@
 ! exec go test
 stderr 'undefined: Intish'
+stderr 'cannot convert 0 (untyped int constant) to type T'
