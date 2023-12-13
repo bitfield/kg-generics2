@@ -1,2 +1,2 @@
 ! exec go test
-stderr -count=2 'undefined: merge.Merge'
+stderr -count=3 'undefined: merge.Merge'

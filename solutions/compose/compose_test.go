@@ -3,30 +3,33 @@ package compose_test
 import (
 	"strings"
 	"testing"
+	"unicode/utf8"
 
 	"github.com/bitfield/compose"
 )
 
-func isOdd(p int) bool {
-	return p%2 != 0
+func double(p int) int {
+	return p * 2
 }
 
-func next(p int) int {
+func addOne(p int) int {
 	return p + 1
 }
 
-func TestComposeAppliesFuncsToIntInReverseOrder(t *testing.T) {
+func TestComposeAppliesFuncsInReverseOrder(t *testing.T) {
 	t.Parallel()
-	if compose.Compose(isOdd, next, 1) {
-		t.Fatal("want false for isOdd(next(1)), got true")
+	want := 4
+	got := compose.Compose(double, addOne, 1)
+	if want != got {
+		t.Errorf("want %d, got %d", want, got)
 	}
 }
 
-func TestComposeAppliesFuncsToStringInReverseOrder(t *testing.T) {
+func TestComposeHandlesDifferentFuncSignatures(t *testing.T) {
 	t.Parallel()
 	input := "HeLlO, wOrLd"
-	want := "hello, world"
-	got := compose.Compose(strings.ToLower, strings.ToUpper, input)
+	want := 12
+	got := compose.Compose(utf8.RuneCountInString, strings.ToUpper, input)
 	if want != got {
 		t.Errorf("want %q, got %q", want, got)
 	}

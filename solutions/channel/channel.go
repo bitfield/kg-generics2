@@ -1,43 +1,33 @@
 package channel
 
-import "sync"
+import "sync/atomic"
 
 type Channel[T any] struct {
-	lock            *sync.RWMutex
 	ch              chan T
-	sends, receives int
+	sends, receives atomic.Uint64
 }
 
 func New[T any](length int) *Channel[T] {
 	return &Channel[T]{
-		lock: &sync.RWMutex{},
-		ch:   make(chan T, length),
+		ch: make(chan T, length),
 	}
 }
 
 func (c *Channel[T]) Send(v T) {
 	c.ch <- v
-	c.lock.Lock()
-	defer c.lock.Unlock()
-	c.sends++
+	c.sends.Add(1)
 }
 
 func (c *Channel[T]) Receive() T {
 	v := <-c.ch
-	c.lock.Lock()
-	defer c.lock.Unlock()
-	c.receives++
+	c.receives.Add(1)
 	return v
 }
 
-func (c *Channel[T]) Sends() int {
-	c.lock.RLock()
-	defer c.lock.RUnlock()
-	return c.sends
+func (c *Channel[T]) Sends() uint64 {
+	return c.sends.Load()
 }
 
-func (c *Channel[T]) Receives() int {
-	c.lock.RLock()
-	defer c.lock.RUnlock()
-	return c.receives
+func (c *Channel[T]) Receives() uint64 {
+	return c.receives.Load()
 }

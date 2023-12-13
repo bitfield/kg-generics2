@@ -1,11 +1,10 @@
 package merge_test
 
 import (
+	"maps"
 	"testing"
 
 	"github.com/bitfield/merge"
-
-	"github.com/google/go-cmp/cmp"
 )
 
 func TestMergeCorrectlyMergesTwoMapsOfIntToBool(t *testing.T) {
@@ -28,8 +27,8 @@ func TestMergeCorrectlyMergesTwoMapsOfIntToBool(t *testing.T) {
 		5: true,
 	}
 	got := merge.Merge(inputs...)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if !maps.Equal(want, got) {
+		t.Errorf("want %v, got %v", want, got)
 	}
 }
 
@@ -53,7 +52,22 @@ func TestMergeCorrectlyMergesThreeMapsOfStringToAny(t *testing.T) {
 		"c": 0,
 	}
 	got := merge.Merge(inputs...)
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if !maps.Equal(want, got) {
+		t.Errorf("want %v, got %v", want, got)
+	}
+}
+
+func TestMergeHandlesDerivedTypes(t *testing.T) {
+	t.Parallel()
+	type menu map[int]string
+	m1 := menu{1: "eggs"}
+	m2 := menu{2: "beans"}
+	want := menu{
+		1: "eggs",
+		2: "beans",
+	}
+	got := merge.Merge(m1, m2)
+	if !maps.Equal(want, got) {
+		t.Errorf("want %v, got %v", want, got)
 	}
 }

@@ -4,20 +4,18 @@ import (
 	"testing"
 
 	"github.com/bitfield/stack"
-
-	"github.com/google/go-cmp/cmp"
 )
 
-func TestPushOneValueToEmptyStackLeavesTheStackWithLength1(t *testing.T) {
+func TestPushToEmptyStackGivesStackWithLength1(t *testing.T) {
 	t.Parallel()
 	s := stack.Stack[int]{}
 	s.Push(0)
 	if s.Len() != 1 {
-		t.Fatal("Push didn't add value to stack")
+		t.Fatalf("want stack length 1, got %d", s.Len())
 	}
 }
 
-func TestPushTwiceThenPopTwiceOnEmptyStackLeavesTheStackEmpty(t *testing.T) {
+func TestPushPushPopPopLeavesStackEmpty(t *testing.T) {
 	t.Parallel()
 	s := stack.Stack[string]{}
 	s.Push("a", "b")
@@ -30,8 +28,8 @@ func TestPushTwiceThenPopTwiceOnEmptyStackLeavesTheStackEmpty(t *testing.T) {
 	if !ok {
 		t.Fatal("Pop returned not ok on non-empty stack")
 	}
-	if !cmp.Equal(want, got) {
-		t.Error(cmp.Diff(want, got))
+	if want != got {
+		t.Errorf("want %q, got %q", want, got)
 	}
 }
 

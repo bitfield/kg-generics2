@@ -24,7 +24,7 @@ func TestSendsReturns3AfterThreeSendOperations(t *testing.T) {
 	c.Send(1.0)
 	c.Send(2.0)
 	c.Send(3.0)
-	want := 3
+	want := uint64(3)
 	got := c.Sends()
 	if want != got {
 		t.Fatalf("want %d sends, got %d", want, got)
@@ -38,27 +38,27 @@ func TestReceivesReturns2AfterTwoSendOperations(t *testing.T) {
 	_ = c.Receive()
 	c.Send(struct{}{})
 	_ = c.Receive()
-	want := 2
+	want := uint64(2)
 	got := c.Receives()
 	if want != got {
 		t.Fatalf("want %d receives, got %d", want, got)
 	}
 }
 
-func TestChannelDoesNotPanicOnManyConcurrentSendsAndReceives(t *testing.T) {
+func TestChannelHandlesConcurrentSendsAndReceives(t *testing.T) {
 	t.Parallel()
 	c := channel.New[string](10)
-	want := 100
+	want := uint64(100)
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		for i := 0; i < want; i++ {
+		for i := uint64(0); i < want; i++ {
 			c.Send("hello")
 			_ = c.Receives()
 		}
 		wg.Done()
 	}()
-	for i := 0; i < want; i++ {
+	for i := uint64(0); i < want; i++ {
 		_ = c.Receive()
 		_ = c.Sends()
 	}
