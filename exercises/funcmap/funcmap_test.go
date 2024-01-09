@@ -24,7 +24,7 @@ func TestFuncMap_AppliesDoubleTo2AndReturns4(t *testing.T) {
 	}
 }
 
-func TestFuncMap_AppliesUpperToUppercaseInputAndReturnsTrue(t *testing.T) {
+func TestFuncMap_AppliesUpperToUppercaseInput(t *testing.T) {
 	t.Parallel()
 	fm := funcmap.FuncMap[rune, bool]{
 		"upper": unicode.IsUpper,
