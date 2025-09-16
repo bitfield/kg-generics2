@@ -1,5 +1,7 @@
-# Know Go: Generics
+# Know Go
 
 [![](cover_small.png)](https://bitfieldconsulting.com/books/generics)
 
-This repository contains exercises, solutions, and code samples from the book [Know Go: Generics](https://bitfieldconsulting.com/books/generics), by John Arundel.
+This repository contains exercises, solutions, and code samples from the book [Know Go](https://bitfieldconsulting.com/books/generics), by John Arundel.
+
+[Subscribe to learn Go with me!](https://bitfieldconsulting.com/subscribe)
